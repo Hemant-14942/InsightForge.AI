@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #002B6B;
+    --color-secondary: #414D60;
+    --color-blue: #0066FF;
+    --color-pwpurple: #5A4BDA;
+    --color-bgtheme:#DEDBF8;
+    --color-main:#B3ED85;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Black.woff2') format('woff2');
+  font-style: normal;
+  /* font-weight: 900; Optional: if this is your black weight */
+  font-display: swap;
+}
