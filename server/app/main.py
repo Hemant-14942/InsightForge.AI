@@ -29,6 +29,7 @@ app.add_middleware(SessionMiddleware, secret_key="hemant123")
 # Configure CORS
 origins = [
     "http://localhost:3000",  # React frontend
+    "http://localhost:5173",  # Vite development server
     "http://localhost:8000",  # Development
 ]
 

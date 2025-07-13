@@ -1,109 +1,125 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Home,
+  Info,
+  MessageSquare,
+  LogIn,
+  Rocket,
+  Menu,
+  X,
+} from 'lucide-react';
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+  UserButton,
+} from '@clerk/clerk-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  return (
-    <nav className="fixed top-0 left-0 right-0 bg-black/50 bg-opacity-70 backdrop-blur-sm shadow-md z-50">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 border-b border-b-white ">
+  const navItems = [
+    { name: 'Home', path: '/', icon: Home },
+    { name: 'About', path: '/about', icon: Info },
+    { name: 'Contact', path: '/contact', icon: MessageSquare },
+  ];
 
+  return (
+    <nav className="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-sm shadow-md z-50">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 border-b border-b-white/20">
         {/* Logo */}
-        <div className="text-white font-bold text-2xl font-Satoshi">
+        <div className="text-white font-bold text-2xl font-Satoshi flex items-center gap-2">
+          <Rocket className="w-6 h-6 text-main" />
           InsightForge<span className="text-main">AI</span>
         </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-10 items-center">
-          {['Home', 'About', 'Contact'].map((item) => (
+          {navItems.map(({ name, path, icon: Icon }) => (
             <Link
-              key={item}
-              to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-              className="relative text-white text-lg font-medium px-1.5 py-1
-                before:absolute before:-bottom-1 before:left-0 before:w-full before:h-[2px] before:bg-green-400 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100"
+              key={name}
+              to={path}
+              className="relative text-white text-lg font-medium px-1.5 py-1 flex items-center gap-2 group
+                before:absolute before:-bottom-1 before:left-0 before:w-full before:h-[2px] before:bg-green-400 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 group-hover:before:scale-x-100"
             >
-              {item}
+              <Icon className="w-5 h-5 text-main group-hover:text-green-400 transition-colors" />
+              {name}
             </Link>
           ))}
 
-          {/* Login Button */}
-          <Link
-            to="/login"
-            className="text-white text-lg font-medium px-4 py-2 border border-green-400 rounded hover:bg-main hover:text-black transition"
-          >
-            Login
-          </Link>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="text-white text-lg font-medium px-4 py-2 border border-green-400 rounded hover:bg-main hover:text-black transition flex items-center gap-2">
+                <LogIn className="w-5 h-5" />
+                Login
+              </button>
+            </SignInButton>
+          </SignedOut>
 
-          {/* Get Started Button with shining border animation */}
-          <Link
-            to="/get-started"
-            className="relative inline-block px-6 py-2 font-semibold text-black rounded
-              bg-main
-              before:absolute before:inset-0 before:rounded before:bg-gradient-to-r before:from-green-300 before:via-green-500 before:to-green-300
-              before:bg-[length:200%_100%] before:animate-shine before:z-[-1]
-              hover:brightness-110 transition"
-          >
-            Get Started
-          </Link>
+          <SignedIn>
+            <div className="flex items-center gap-4">
+              <UserButton afterSignOutUrl="/" />
+              <SignOutButton>
+                <button className="text-white border border-red-400 px-3 py-1 rounded hover:bg-red-500 hover:text-black transition">
+                  Sign Out
+                </button>
+              </SignOutButton>
+            </div>
+          </SignedIn>
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-white focus:outline-none"
         >
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {isOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
+          {isOpen ? (
+            <X className="w-7 h-7 text-main" />
+          ) : (
+            <Menu className="w-7 h-7 text-main" />
+          )}
         </button>
 
         {/* Mobile Menu */}
         {isOpen && (
           <div className="absolute top-full left-0 right-0 bg-black bg-opacity-90 backdrop-blur-sm flex flex-col items-center space-y-4 py-6 md:hidden z-40">
-            {['Home', 'About', 'Contact'].map((item) => (
+            {navItems.map(({ name, path, icon: Icon }) => (
               <Link
-                key={item}
-                to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                className="text-white text-lg font-medium"
+                key={name}
+                to={path}
+                className="text-white text-lg font-medium flex items-center gap-2 hover:text-main transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                {item}
+                <Icon className="w-5 h-5" />
+                {name}
               </Link>
             ))}
-            <Link
-              to="/login"
-              className="text-white text-lg font-medium"
-              onClick={() => setIsOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              to="/get-started"
-              className="bg-green-400 text-black font-semibold px-6 py-2 rounded"
-              onClick={() => setIsOpen(false)}
-            >
-              Get Started
-            </Link>
+
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button
+                  className="text-white text-lg font-medium flex items-center gap-2 hover:text-main transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <LogIn className="w-5 h-5" />
+                  Login
+                </button>
+              </SignInButton>
+            </SignedOut>
+
+            <SignedIn>
+              <SignOutButton>
+                <button
+                  className="text-white text-lg font-medium flex items-center gap-2 hover:text-red-400 transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <LogIn className="w-5 h-5 rotate-180" />
+                  Sign Out
+                </button>
+              </SignOutButton>
+            </SignedIn>
           </div>
         )}
       </div>

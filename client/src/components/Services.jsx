@@ -1,9 +1,10 @@
 import React from 'react';
-import { BarChart3, Brain, FileText, MessageSquare } from 'lucide-react';
+import { BarChart3, Brain, FileText, MessageSquare, ArrowRight, Sparkles, ChevronRight, Zap } from 'lucide-react';
 
 const services = [
   {
     icon: <FileText className="h-8 w-8 text-green-400" />,
+    secondaryIcon: <Sparkles className="h-6 w-6 text-green-400/70" />,
     title: 'Dataset Analysis',
     description: 'Upload CSV files and receive instant EDA and ML insights.',
     gradient: 'from-green-400/10 to-emerald-500/10',
@@ -11,6 +12,7 @@ const services = [
   },
   {
     icon: <BarChart3 className="h-8 w-8 text-green-400" />,
+    secondaryIcon: <Zap className="h-6 w-6 text-green-400/70" />,
     title: 'Chart Recognition',
     description: 'Extract and understand charts using AI vision tools.',
     gradient: 'from-emerald-400/10 to-teal-500/10',
@@ -18,6 +20,7 @@ const services = [
   },
   {
     icon: <MessageSquare className="h-8 w-8 text-green-400" />,
+    secondaryIcon: <Brain className="h-6 w-6 text-green-400/70" />,
     title: 'AI Chat',
     description: 'Converse with your datasets and extract meaningful insights.',
     gradient: 'from-teal-400/10 to-cyan-500/10',
@@ -25,6 +28,7 @@ const services = [
   },
   {
     icon: <Brain className="h-8 w-8 text-green-400" />,
+    secondaryIcon: <Sparkles className="h-6 w-6 text-green-400/70" />,
     title: 'Machine Learning',
     description: 'Auto-train models and compare performance with ease.',
     gradient: 'from-cyan-400/10 to-green-500/10',
@@ -32,7 +36,7 @@ const services = [
   },
 ];
 
-const ServiceCard = ({ icon, title, description, gradient, delay }) => (
+const ServiceCard = ({ icon, secondaryIcon, title, description, gradient, delay }) => (
   <div
     role="button"
     aria-label={`Learn more about ${title}`}
@@ -58,6 +62,9 @@ const ServiceCard = ({ icon, title, description, gradient, delay }) => (
             <div className="transform group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500">
               {icon}
             </div>
+            <div className="absolute -top-2 -right-2 transform rotate-12 opacity-0 group-hover:opacity-100 transition-all duration-500">
+              {secondaryIcon}
+            </div>
           </div>
           <div className="absolute inset-0 bg-green-400/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700 animate-pulse"></div>
         </div>
@@ -71,9 +78,7 @@ const ServiceCard = ({ icon, title, description, gradient, delay }) => (
 
         <div className="mt-6 flex items-center text-green-400 opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0 transition-all duration-500 group-hover:drop-shadow-lg">
           <span className="text-sm font-medium mr-2 group-hover:text-green-300">Learn More</span>
-          <svg className="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300 group-hover:drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
+          <ArrowRight className="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300 group-hover:drop-shadow-md" />
         </div>
       </div>
 
@@ -99,6 +104,7 @@ const Services = () => {
       {/* Content */}
       <div className="relative z-10">
         <div className="text-center mb-16">
+
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-green-100 to-emerald-100 bg-clip-text text-transparent">
             Our Services
           </h2>

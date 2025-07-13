@@ -11,14 +11,21 @@ const api = axios.create({
 // Upload CSV dataset (and optional PDF) for ML analysis
 export const uploadDatasetWithOptionalPDF = async (formData) => {
   try {
-    const response = await api.post("/upload-dataset", formData, {
+    console.log("Uploading dataset with formData:", [...formData.entries()]);
+    console.log("API base URL:", api.defaults.baseURL);
+    
+    const response = await api.post("/upload", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
+    
+    console.log("Upload response:", response);
     return response.data;
   } catch (error) {
-    console.error("Dataset upload failed:", error.response?.data || error.message);
+    console.error("Dataset upload failed:", error);
+    console.error("Error details:", error.response?.data || error.message);
+    console.error("Error status:", error.response?.status);
     throw error;
   }
 };
